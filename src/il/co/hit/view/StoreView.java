@@ -9,10 +9,12 @@ import java.util.Scanner;
 public class StoreView {
 
     private final ShopView shopView;
+    private final LabView labView;
     private final ShopController shopController;
 
     public StoreView() {
         this.shopView = new ShopView();
+        this.labView = new LabView();
         this.shopController = ShopController.getInstance();
     }
 
@@ -86,16 +88,19 @@ public class StoreView {
             System.out.println("What would you like to do?");
             System.out.println("1. Add new phone to lab");
             System.out.println("2. Check phone status");
-            System.out.println("3. List all pending fix phones");
+            System.out.println("3. List lab phones by status");
             System.out.println("4. Go back to main menu");
 
             String userSelection = scanner.nextLine();
             switch (userSelection) {
                 case "1":
+                    this.labView.addPhoneToLab(scanner);
                     break;
                 case "2":
+                    this.labView.getLabPhone(scanner);
                     break;
                 case "3":
+                    this.labView.filterLabPhone(scanner);
                     break;
                 case "4":
                     stayInLab = false;

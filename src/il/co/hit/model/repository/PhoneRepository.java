@@ -2,40 +2,16 @@ package il.co.hit.model.repository;
 
 import il.co.hit.model.objects.Phone;
 
-import java.util.HashSet;
+import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 
-public class PhoneRepository {
+public interface PhoneRepository {
 
-    private FileManager<Phone> fileManager;
-    private Set<Phone> phoneSet;
+    Phone save(Phone phone) throws Exception;
 
-    public PhoneRepository() {
-        try {
-            this.fileManager = new FileManager<>("phone.json");
-            this.phoneSet = fileManager.read();
-        } catch (Exception e) {
-            this.phoneSet = new HashSet<>();
-        }
-    }
+    boolean exists(String id) throws Exception;
 
-    public Phone save(Phone phone) throws Exception {
-        if (phone == null) {
-            throw new IllegalArgumentException("phone must not be null");
-        }
+    Set<Phone> findAll();
 
-        phone.setId(UUID.randomUUID().toString());
-        this.phoneSet.add(phone);
-        fileManager.write(this.phoneSet);
-        return phone;
-    }
-
-    public Set<Phone> findAll() {
-        return this.phoneSet;
-    }
-
-    public boolean delete(String id) {
-        return this.phoneSet.remove(Phone.builder().id(id).build());
-    }
+    boolean delete(String id);
 }

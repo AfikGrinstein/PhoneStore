@@ -1,11 +1,11 @@
 package il.co.hit.model.objects;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -27,6 +27,10 @@ public class Phone implements Serializable {
     private LocalDate releaseDate;
     private double ramMemory;
     private OS os;
+
+    public Phone(String id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
