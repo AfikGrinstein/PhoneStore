@@ -1,6 +1,6 @@
 package il.co.hit.model.service;
 
-import il.co.hit.model.events.LabStatusUpdateObserver;
+import il.co.hit.model.events.LabStatusUpdateObservable;
 import il.co.hit.model.objects.Contact;
 import il.co.hit.model.objects.LabPhone;
 import il.co.hit.model.objects.LabStatus;
@@ -20,12 +20,12 @@ public class LabService {
 
     private final LabRepository labRepository;
     private final PhoneRepository phoneRepository;
-    private final LabStatusUpdateObserver labStatusUpdateObserver;
+    private final LabStatusUpdateObservable labStatusUpdateObservable;
 
     public LabService() {
         this.labRepository = new LabRepositoryImpl();
         this.phoneRepository = new PhoneRepositoryImpl();
-        this.labStatusUpdateObserver = new LabStatusUpdateObserver();
+        this.labStatusUpdateObservable = new LabStatusUpdateObservable();
     }
 
     public boolean addPhone(String phoneId, String contactName, String contactPhoneNumber, String email) {
@@ -62,7 +62,7 @@ public class LabService {
     }
 
     public void addStatusUpdateObserver(Observer observer) {
-        this.labStatusUpdateObserver.addObserver(observer);
+        this.labStatusUpdateObservable.addObserver(observer);
     }
 
     public boolean updateStatus(String labId, LabStatus status) {
@@ -80,7 +80,7 @@ public class LabService {
     private void publishStatusChangeEvent(LabPhone labPhone) {
         try {
             Phone phone = this.phoneRepository.find(labPhone.getPhoneId());
-            this.labStatusUpdateObserver.statusUpdated(new StatusUpdateEvent(labPhone.getContact(), labPhone.getStatus(), phone.getName()));
+            this.labStatusUpdateObservable.statusUpdated(new StatusUpdateEvent(labPhone.getContact(), labPhone.getStatus(), phone.getName()));
         } catch (Exception e) {
             // Failed to publish an event
         }
