@@ -47,12 +47,12 @@ public class LabView {
         System.out.println();
     }
 
-    public void getLabPhone(Scanner scanner) {
+    public void getLabPhoneStatus(Scanner scanner) {
         System.out.print("Lab id: ");
         String labPhoneId = scanner.nextLine();
 
         LabPhone labPhone = this.labController.getLabPhone(labPhoneId);
-        System.out.println(labPhone);
+        System.out.println("Status = " + labPhone.getStatus().toString());
         System.out.println();
     }
 

@@ -14,7 +14,7 @@ public class EmailNotificationObserver implements Observer {
         if (arg != null) {
             StatusUpdateEvent event = (StatusUpdateEvent) arg;
             if (Utils.hasText(event.getContact().getEmail())) {
-                String emailBody = MessageFormat.format("Email was sent to {0}; Hi {3}, Phone {1} is now in status {2}",
+                String emailBody = MessageFormat.format("Email was sent to {0}; Hi {3}, Phone ''{1}'' status has been updated to: {2}",
                         event.getContact().getEmail(),
                         event.getPhoneName(),
                         event.getNewStatus().toString(),

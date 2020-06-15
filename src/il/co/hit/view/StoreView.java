@@ -94,7 +94,7 @@ public class StoreView {
                     this.labView.addPhoneToLab(scanner);
                     break;
                 case "2":
-                    this.labView.getLabPhone(scanner);
+                    this.labView.getLabPhoneStatus(scanner);
                     break;
                 case "3":
                     this.labView.filterLabPhone(scanner);
