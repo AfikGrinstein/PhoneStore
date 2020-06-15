@@ -1,6 +1,6 @@
 package il.co.hit.controller;
 
-import il.co.hit.model.ShopService;
+import il.co.hit.model.service.ShopService;
 import il.co.hit.model.objects.Brand;
 import il.co.hit.model.objects.OS;
 import il.co.hit.model.objects.Phone;
