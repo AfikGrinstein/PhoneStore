@@ -3,6 +3,7 @@ package il.co.hit.model.repository;
 import il.co.hit.model.objects.LabPhone;
 import il.co.hit.model.objects.LabStatus;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class LabRepositoryImpl implements LabRepository {
     public LabRepositoryImpl() {
         try {
             this.fileManager = new FileManager<>("lab_phone.data");
-            this.labPhoneSet = fileManager.read();
+            this.labPhoneSet = this.fileManager.read();
         } catch (Exception e) {
             this.labPhoneSet = new HashSet<>();
         }
@@ -29,7 +30,7 @@ public class LabRepositoryImpl implements LabRepository {
 
         labPhone.setId(UUID.randomUUID().toString());
         this.labPhoneSet.add(labPhone);
-        fileManager.write(this.labPhoneSet);
+        this.fileManager.write(this.labPhoneSet);
         return labPhone;
     }
 
@@ -50,11 +51,6 @@ public class LabRepositoryImpl implements LabRepository {
     }
 
     @Override
-    public boolean delete(String id) {
-        return this.labPhoneSet.remove(new LabPhone(id));
-    }
-
-    @Override
     public Set<LabPhone> filterByStatus(LabStatus status) {
         HashSet<LabPhone> response = new HashSet<>();
         for (LabPhone labPhone: this.labPhoneSet) {
@@ -64,5 +60,12 @@ public class LabRepositoryImpl implements LabRepository {
         }
 
         return response;
+    }
+
+    @Override
+    public void update(LabPhone phone) throws IOException {
+        this.labPhoneSet.remove(new LabPhone(phone.getId()));
+        this.labPhoneSet.add(phone);
+        this.fileManager.write(this.labPhoneSet);
     }
 }

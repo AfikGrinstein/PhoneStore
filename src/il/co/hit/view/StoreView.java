@@ -53,27 +53,23 @@ public class StoreView {
         while (stayInShop) {
             System.out.println("What would you like to do?");
             System.out.println("1. Add new phone to store");
-            System.out.println("2. Remove phone from store");
-            System.out.println("3. Get all store phones");
-            System.out.println("4. Go back to main menu");
+            System.out.println("2. Get all store phones");
+            System.out.println("9. Go back to main menu");
 
             String userSelection = scanner.nextLine();
             switch (userSelection) {
                 case "1":
-                    shopView.newPhone(scanner);
+                    this.shopView.newPhone(scanner);
                     break;
                 case "2":
-                    shopView.removePhone(scanner);
-                    break;
-                case "3":
-                    List<Phone> phones = shopController.getAllPhones();
+                    List<Phone> phones = this.shopController.getAllPhones();
                     System.out.println("Available phones in store:");
                     for (Phone phone : phones) {
                         System.out.println(phone);
                     }
                     System.out.println();
                     break;
-                case "4":
+                case "9":
                     stayInShop = false;
                     break;
                 default:
@@ -89,7 +85,8 @@ public class StoreView {
             System.out.println("1. Add new phone to lab");
             System.out.println("2. Check phone status");
             System.out.println("3. List lab phones by status");
-            System.out.println("4. Go back to main menu");
+            System.out.println("4. Update phone status");
+            System.out.println("9. Go back to main menu");
 
             String userSelection = scanner.nextLine();
             switch (userSelection) {
@@ -103,6 +100,9 @@ public class StoreView {
                     this.labView.filterLabPhone(scanner);
                     break;
                 case "4":
+                    this.labView.updateStatus(scanner);
+                    break;
+                case "9":
                     stayInLab = false;
                     break;
                 default:

@@ -1,5 +1,7 @@
 package il.co.hit.controller;
 
+import il.co.hit.model.events.EmailNotificationObserver;
+import il.co.hit.model.events.SMSNotificationObserver;
 import il.co.hit.model.objects.LabPhone;
 import il.co.hit.model.objects.LabStatus;
 import il.co.hit.model.service.LabService;
@@ -17,6 +19,8 @@ public class LabController {
 
     private LabController() {
         this.labService = new LabService();
+        this.labService.addStatusUpdateObserver(new EmailNotificationObserver());
+        this.labService.addStatusUpdateObserver(new SMSNotificationObserver());
     }
 
     public static LabController getInstance() {
@@ -57,5 +61,14 @@ public class LabController {
         } catch (NoSuchFieldException e) {
             return null;
         }
+    }
+
+    public boolean updateStatus(String labId, String newStatus) {
+        LabStatus status = LabStatus.valueOf(newStatus.trim().toUpperCase());
+        if (status == LabStatus.NEW) {
+            return false;
+        }
+
+        return this.labService.updateStatus(labId, status);
     }
 }

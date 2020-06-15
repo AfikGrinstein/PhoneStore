@@ -3,6 +3,7 @@ package il.co.hit.model.repository;
 import il.co.hit.model.objects.LabPhone;
 import il.co.hit.model.objects.LabStatus;
 
+import java.io.IOException;
 import java.util.Set;
 
 public interface LabRepository {
@@ -13,7 +14,7 @@ public interface LabRepository {
 
     LabPhone find(String id) throws NoSuchFieldException;
 
-    boolean delete(String id);
-
     Set<LabPhone> filterByStatus(LabStatus status);
+
+    void update(LabPhone phone) throws IOException;
 }

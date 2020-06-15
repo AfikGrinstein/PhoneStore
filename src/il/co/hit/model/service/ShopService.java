@@ -27,8 +27,4 @@ public class ShopService {
     public Set<Phone> getAllPhonesInStore() {
         return this.phoneRepository.findAll();
     }
-
-    public boolean delete(String id) {
-        return this.phoneRepository.delete(id);
-    }
 }
