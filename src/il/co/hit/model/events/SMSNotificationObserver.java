@@ -14,7 +14,7 @@ public class SMSNotificationObserver implements Observer {
         if (arg != null) {
             StatusUpdateEvent event = (StatusUpdateEvent) arg;
             if (Utils.hasText(event.getContact().getPhoneNumber())) {
-                String smsBody = MessageFormat.format("SMS was sent to {0}; Hi {3}, Phone {1} is now in status {2}",
+                String smsBody = MessageFormat.format("SMS was sent to {0}; Hi {3}, Phone ''{1}'' status has been updated to: {2}",
                         event.getContact().getPhoneNumber(),
                         event.getPhoneName(),
                         event.getNewStatus().toString(),
