@@ -1,5 +1,6 @@
 package il.co.hit.model.repository;
 
+import il.co.hit.model.objects.LabPhone;
 import il.co.hit.model.objects.Phone;
 
 import java.util.HashSet;
@@ -34,14 +35,12 @@ public class PhoneRepositoryImpl implements PhoneRepository {
     }
 
     @Override
-    public boolean exists(String id) throws Exception {
+    public boolean exists(String id) {
         if (id == null) {
             return false;
         }
 
-        boolean success = this.phoneSet.contains(new Phone(id));
-        this.fileManager.write(this.phoneSet);
-        return success;
+        return this.phoneSet.contains(new Phone(id));
     }
 
     @Override
@@ -50,7 +49,13 @@ public class PhoneRepositoryImpl implements PhoneRepository {
     }
 
     @Override
-    public boolean delete(String id) {
-        return this.phoneSet.remove(new Phone(id));
+    public Phone find(String id) throws NoSuchFieldException {
+        for (Phone phone: this.phoneSet) {
+            if (phone.getId().equals(id)) {
+                return phone;
+            }
+        }
+
+        throw new java.lang.NoSuchFieldException("Cannot find phone with id " + id);
     }
 }

@@ -35,18 +35,4 @@ public class ShopView {
         }
         System.out.println();
     }
-
-    public void removePhone(Scanner scanner) {
-        System.out.print("Enter phone id: ");
-        String id = scanner.nextLine();
-
-        boolean success = this.shopController.deletePhone(id);
-        if (success) {
-            System.out.println("Phone deleted");
-        } else {
-            System.out.println("Failed to delete phone (id: " + id + ")");
-        }
-
-        System.out.println();
-    }
 }

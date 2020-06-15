@@ -20,9 +20,9 @@ public class LabView {
         String phoneId = scanner.nextLine();
         System.out.print("Contact name: ");
         String contactName = scanner.nextLine();
-        System.out.print("Contact phone number: ");
+        System.out.print("Contact phone number (optional): ");
         String contactPhoneNumber = scanner.nextLine();
-        System.out.print("Email (Optional): ");
+        System.out.print("Email (optional): ");
         String email = scanner.nextLine();
 
         boolean success = this.labController.addPhoneToLab(phoneId, contactName, contactPhoneNumber, email);
@@ -53,6 +53,21 @@ public class LabView {
 
         LabPhone labPhone = this.labController.getLabPhone(labPhoneId);
         System.out.println(labPhone);
+        System.out.println();
+    }
+
+    public void updateStatus(Scanner scanner) {
+        System.out.print("Enter lab phone id: ");
+        String labId = scanner.nextLine();
+        System.out.print("New status (In_Progress | Finished): ");
+        String newStatus = scanner.nextLine();
+
+        boolean success = this.labController.updateStatus(labId, newStatus);
+        if (success) {
+            System.out.println("Status updated to " + newStatus);
+        } else {
+            System.out.println("Failed to update status to phone " + labId);
+        }
         System.out.println();
     }
 }

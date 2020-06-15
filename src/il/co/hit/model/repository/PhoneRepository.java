@@ -2,7 +2,6 @@ package il.co.hit.model.repository;
 
 import il.co.hit.model.objects.Phone;
 
-import java.io.IOException;
 import java.util.Set;
 
 public interface PhoneRepository {
@@ -13,5 +12,5 @@ public interface PhoneRepository {
 
     Set<Phone> findAll();
 
-    boolean delete(String id);
+    Phone find(String id) throws NoSuchFieldException;
 }

@@ -51,12 +51,4 @@ public class ShopController {
         Set<Phone> phones = this.shopService.getAllPhonesInStore();
         return new ArrayList<>(phones);
     }
-
-    public boolean deletePhone(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            return false;
-        }
-
-        return this.shopService.delete(id);
-    }
 }
