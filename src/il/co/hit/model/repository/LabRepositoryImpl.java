@@ -9,13 +9,14 @@ import java.util.Set;
 import java.util.UUID;
 
 public class LabRepositoryImpl implements LabRepository {
+    public static String FILENAME = "lab_phone.data";
 
     private FileManager<LabPhone> fileManager;
     private Set<LabPhone> labPhoneSet;
 
     public LabRepositoryImpl() {
         try {
-            this.fileManager = new FileManager<>("lab_phone.data");
+            this.fileManager = new FileManager<>(FILENAME);
             this.labPhoneSet = this.fileManager.read();
         } catch (Exception e) {
             this.labPhoneSet = new HashSet<>();
