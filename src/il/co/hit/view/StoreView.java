@@ -1,6 +1,8 @@
 package il.co.hit.view;
 
+import il.co.hit.controller.LabController;
 import il.co.hit.controller.ShopController;
+import il.co.hit.model.exception.InvalidSessionException;
 import il.co.hit.model.objects.Phone;
 
 import java.util.List;
@@ -11,11 +13,15 @@ public class StoreView {
     private final ShopView shopView;
     private final LabView labView;
     private final ShopController shopController;
+    private final LabController labController;
+
+    private String session;
 
     public StoreView() {
         this.shopView = new ShopView();
         this.labView = new LabView();
         this.shopController = ShopController.getInstance();
+        this.labController = LabController.getInstance();
     }
 
     public void start() {
@@ -25,7 +31,7 @@ public class StoreView {
             while (stayInStore) {
                 System.out.println("What would you like to do?");
                 System.out.println("1. Shop");
-                System.out.println("2. Lab");
+                System.out.println("2. Lab (password required)");
                 System.out.println("Q. Exit");
 
                 String userSelection = scanner.nextLine();
@@ -79,6 +85,15 @@ public class StoreView {
     }
 
     public void lab(Scanner scanner) {
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
+        this.session = this.labController.createSession(password);
+        if (this.session == null) {
+            System.out.println("Password is invalid, returning to main menu");
+            System.out.println();
+            return;
+        }
+
         boolean stayInLab = true;
         while (stayInLab) {
             System.out.println("What would you like to do?");
@@ -89,25 +104,32 @@ public class StoreView {
             System.out.println("9. Go back to main menu");
 
             String userSelection = scanner.nextLine();
-            switch (userSelection) {
-                case "1":
-                    this.labView.addPhoneToLab(scanner);
-                    break;
-                case "2":
-                    this.labView.getLabPhoneStatus(scanner);
-                    break;
-                case "3":
-                    this.labView.filterLabPhone(scanner);
-                    break;
-                case "4":
-                    this.labView.updateStatus(scanner);
-                    break;
-                case "9":
-                    stayInLab = false;
-                    break;
-                default:
-                    System.out.println("Selection is not valid, Please select a option from the available options");
+            try {
+                switch (userSelection) {
+                    case "1":
+                        this.labView.addPhoneToLab(scanner, session);
+                        break;
+                    case "2":
+                        this.labView.getLabPhoneStatus(scanner, session);
+                        break;
+                    case "3":
+                        this.labView.filterLabPhone(scanner, session);
+                        break;
+                    case "4":
+                        this.labView.updateStatus(scanner, session);
+                        break;
+                    case "9":
+                        stayInLab = false;
+                        break;
+                    default:
+                        System.out.println("Selection is not valid, Please select a option from the available options");
+                }
+            } catch (InvalidSessionException e) {
+                System.out.println("Session " + session + " invalid, returning to main menu");
+                stayInLab = false;
             }
         }
+
+        this.labController.logout(session);
     }
 }
