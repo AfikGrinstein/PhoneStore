@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 public class LabTests {
 
     private LabController labController;
+    private String session;
 
     @BeforeAll
     public static void beforeAll() {
@@ -19,20 +20,21 @@ public class LabTests {
     @BeforeEach
     public void setup() {
         labController = LabController.getInstance();
+        session = labController.createSession("1234");
     }
-
 
     @Test
     public void addLabPhoneWithInvalidPhoneId() {
-        boolean result = labController.addPhoneToLab("xx", "Test", "", "");
-
-        Assertions.assertFalse(result);
+        Assertions.assertDoesNotThrow(() -> {
+            boolean result = labController.addPhoneToLab(session, "xx", "Test", "", "");
+            Assertions.assertFalse(result);
+        });
     }
 
     @Test
     public void changeStatusWithInvalidStatus() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            labController.updateStatus("xx", "wrong_status");
+            labController.updateStatus(session, "xx", "wrong_status");
         });
     }
 }

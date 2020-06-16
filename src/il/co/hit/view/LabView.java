@@ -1,8 +1,8 @@
 package il.co.hit.view;
 
 import il.co.hit.controller.LabController;
+import il.co.hit.model.exception.InvalidSessionException;
 import il.co.hit.model.objects.LabPhone;
-import il.co.hit.model.objects.Phone;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class LabView {
         this.labController = LabController.getInstance();
     }
 
-    public void addPhoneToLab(Scanner scanner) {
+    public void addPhoneToLab(Scanner scanner, String session) throws InvalidSessionException {
         System.out.print("Phone id: ");
         String phoneId = scanner.nextLine();
         System.out.print("Contact name: ");
@@ -25,7 +25,7 @@ public class LabView {
         System.out.print("Email (optional): ");
         String email = scanner.nextLine();
 
-        boolean success = this.labController.addPhoneToLab(phoneId, contactName, contactPhoneNumber, email);
+        boolean success = this.labController.addPhoneToLab(session, phoneId, contactName, contactPhoneNumber, email);
         if (success) {
             System.out.println("Phone " + phoneId + " added successfully to lab");
         } else {
@@ -34,11 +34,11 @@ public class LabView {
         System.out.println();
     }
 
-    public void filterLabPhone(Scanner scanner) {
+    public void filterLabPhone(Scanner scanner, String session) throws InvalidSessionException {
         System.out.print("Status (New | In_Progress | Finished || All): ");
         String filterStatus = scanner.nextLine();
 
-        List<LabPhone> labPhones = this.labController.filterByStatus(filterStatus);
+        List<LabPhone> labPhones = this.labController.filterByStatus(session, filterStatus);
         System.out.println("Available phones in lab filter by status (" + filterStatus + "):");
         for (LabPhone labPhone : labPhones) {
             System.out.println(labPhone);
@@ -47,22 +47,22 @@ public class LabView {
         System.out.println();
     }
 
-    public void getLabPhoneStatus(Scanner scanner) {
+    public void getLabPhoneStatus(Scanner scanner, String session) throws InvalidSessionException {
         System.out.print("Lab id: ");
         String labPhoneId = scanner.nextLine();
 
-        LabPhone labPhone = this.labController.getLabPhone(labPhoneId);
+        LabPhone labPhone = this.labController.getLabPhone(session, labPhoneId);
         System.out.println("Status = " + labPhone.getStatus().toString());
         System.out.println();
     }
 
-    public void updateStatus(Scanner scanner) {
+    public void updateStatus(Scanner scanner, String session) throws InvalidSessionException {
         System.out.print("Enter lab phone id: ");
         String labId = scanner.nextLine();
         System.out.print("New status (In_Progress | Finished): ");
         String newStatus = scanner.nextLine();
 
-        boolean success = this.labController.updateStatus(labId, newStatus);
+        boolean success = this.labController.updateStatus(session, labId, newStatus);
         if (success) {
             System.out.println("Status updated to " + newStatus);
         } else {
