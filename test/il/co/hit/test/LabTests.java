@@ -1,6 +1,7 @@
 package il.co.hit.test;
 
 import il.co.hit.controller.LabController;
+import il.co.hit.controller.ShopController;
 import il.co.hit.model.repository.LabRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 public class LabTests {
 
     private LabController labController;
+    private ShopController shopController;
     private String session;
 
     @BeforeAll
@@ -20,6 +22,7 @@ public class LabTests {
     @BeforeEach
     public void setup() {
         labController = LabController.getInstance();
+        shopController = ShopController.getInstance();
         session = labController.createSession("1234");
     }
 
@@ -35,6 +38,14 @@ public class LabTests {
     public void changeStatusWithInvalidStatus() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             labController.updateStatus(session, "xx", "wrong_status");
+        });
+    }
+
+    @Test
+    public void failedToDeleteWithInvalidPhoneId() {
+        Assertions.assertDoesNotThrow(() -> {
+            boolean result = shopController.delete("xx");
+            Assertions.assertFalse(result);
         });
     }
 }

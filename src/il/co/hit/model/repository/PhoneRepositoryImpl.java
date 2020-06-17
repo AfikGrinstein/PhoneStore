@@ -1,8 +1,9 @@
 package il.co.hit.model.repository;
 
-import il.co.hit.model.objects.LabPhone;
+import il.co.hit.model.exception.NotFoundException;
 import il.co.hit.model.objects.Phone;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -57,5 +58,15 @@ public class PhoneRepositoryImpl implements PhoneRepository {
         }
 
         throw new java.lang.NoSuchFieldException("Cannot find phone with id " + id);
+    }
+
+    @Override
+    public void delete(String id) throws NotFoundException, IOException {
+        boolean removed = this.phoneSet.remove(new Phone(id));
+        if (removed) {
+            this.fileManager.write(this.phoneSet);
+        } else {
+            throw new NotFoundException();
+        }
     }
 }

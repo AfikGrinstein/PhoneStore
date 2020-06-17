@@ -5,6 +5,7 @@ import il.co.hit.controller.ShopController;
 import il.co.hit.model.exception.InvalidSessionException;
 import il.co.hit.model.objects.Phone;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class StoreView {
         this.labController = LabController.getInstance();
     }
 
-    public void start() {
+    public void start() throws IOException {
         System.out.println("Welcome to Phone Store :-)");
         boolean stayInStore = true;
         try (Scanner scanner = new Scanner(System.in)) {
@@ -53,13 +54,14 @@ public class StoreView {
         }
     }
 
-    public void shop(Scanner scanner) {
+    public void shop(Scanner scanner) throws IOException {
         boolean stayInShop = true;
 
         while (stayInShop) {
             System.out.println("What would you like to do?");
             System.out.println("1. Add new phone to store");
             System.out.println("2. Get all store phones");
+            System.out.println("3. Delete phone from store");
             System.out.println("9. Go back to main menu");
 
             String userSelection = scanner.nextLine();
@@ -74,6 +76,9 @@ public class StoreView {
                         System.out.println(phone);
                     }
                     System.out.println();
+                    break;
+                case "3":
+                    this.shopView.delete(scanner);
                     break;
                 case "9":
                     stayInShop = false;
