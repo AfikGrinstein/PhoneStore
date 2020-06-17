@@ -1,10 +1,12 @@
 package il.co.hit.controller;
 
-import il.co.hit.model.service.ShopService;
+import il.co.hit.model.Utils;
 import il.co.hit.model.objects.Brand;
 import il.co.hit.model.objects.OS;
 import il.co.hit.model.objects.Phone;
+import il.co.hit.model.service.ShopService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +52,13 @@ public class ShopController {
     public List<Phone> getAllPhones() {
         Set<Phone> phones = this.shopService.getAllPhonesInStore();
         return new ArrayList<>(phones);
+    }
+
+    public boolean delete(String id) throws IOException {
+        if (!Utils.hasText(id)) {
+            return false;
+        }
+
+        return this.shopService.delete(id);
     }
 }

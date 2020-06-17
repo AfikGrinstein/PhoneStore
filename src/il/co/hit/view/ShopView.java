@@ -2,6 +2,8 @@ package il.co.hit.view;
 
 import il.co.hit.controller.ShopController;
 
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -32,6 +34,19 @@ public class ShopView {
             System.out.println("Phone " + phoneName + " added successfully");
         } else {
             System.out.println("Failed to add " + phoneName);
+        }
+        System.out.println();
+    }
+
+    public void delete(Scanner scanner) throws IOException {
+        System.out.print("Phone id: ");
+        String id = scanner.nextLine();
+
+        boolean success = this.shopController.delete(id);
+        if (success) {
+            System.out.println(MessageFormat.format("Phone {0} deleted from store", id));
+        } else {
+            System.out.println("Failed to delete " + id);
         }
         System.out.println();
     }

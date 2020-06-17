@@ -5,7 +5,11 @@ import il.co.hit.view.StoreView;
 public class Main {
 
     public static void main(String[] args) {
-        StoreView storeView = new StoreView();
-        storeView.start();
+        try {
+            StoreView storeView = new StoreView();
+            storeView.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
