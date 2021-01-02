@@ -52,7 +52,11 @@ public class LabView {
         String labPhoneId = scanner.nextLine();
 
         LabPhone labPhone = this.labController.getLabPhone(session, labPhoneId);
-        System.out.println("Status = " + labPhone.getStatus().toString());
+        if (labPhone == null) {
+            System.out.println("Cannot find lab phone with id = " + labPhoneId);
+        } else {
+            System.out.println("Status = " + labPhone.getStatus().toString());
+        }
         System.out.println();
     }
 

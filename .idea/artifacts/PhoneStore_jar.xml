@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/PhoneStore_jar</output-path>
     <root id="archive" name="PhoneStore.jar">
       <element id="module-output" name="PhoneStore" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/lombok.jar" path-in-jar="/" />
+      <element id="library" level="project" name="lombok" />
     </root>
   </artifact>
 </component>
