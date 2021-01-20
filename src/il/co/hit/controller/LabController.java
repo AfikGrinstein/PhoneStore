@@ -42,6 +42,8 @@ public class LabController {
 
     public boolean addPhoneToLab(String session, String phoneId, String contactName, String contactPhoneNumber, String email) throws InvalidSessionException {
         this.validateSession(session);
+
+
         return this.labService.addPhone(phoneId, contactName, contactPhoneNumber, email);
     }
 
